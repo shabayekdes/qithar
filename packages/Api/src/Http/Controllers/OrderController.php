@@ -36,12 +36,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->request->add(['number' => time()]);
         $order = Order::create($request->all());
 
-        foreach ($request->items as $item) {
-            $order->meals()->attach($item['id'],['qty' => $item['qty']]);
+        if($request->type == "dinner"){
+            foreach ($request->items as $item) {
+                $order->dinners()->attach($item['id'],['qty' => $item['qty']]);
+            }
+
+        }else{
+            foreach ($request->items as $item) {
+                $order->meals()->attach($item['id'],['qty' => $item['qty']]);
+            }
         }
+
 
         return response()->json(['message' => "Thanks our agent reply you very soon"], 200);
 

@@ -34,6 +34,14 @@ class Order extends Model
      */
     public function meals()
     {
-        return $this->belongsToMany(Meal::class)->withPivot('qty');
+        return $this->morphedByMany(Meal::class, 'orderable');
+    }
+
+    /**
+     * Get all of the campaigns that are assigned this tag.
+     */
+    public function dinners()
+    {
+        return $this->morphedByMany(Dinner::class, 'orderable');
     }
 }
