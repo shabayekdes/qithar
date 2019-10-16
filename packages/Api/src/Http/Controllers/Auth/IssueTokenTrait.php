@@ -20,7 +20,8 @@ trait IssueTokenTrait{
             $params['username'] = $request->username ?: $request->email;
         }
 
-		$request->request->add($params);
+        $request->request->add($params);
+        dd();
 		$proxy = Request::create('oauth/token', 'POST');
 
     	return Route::dispatch($proxy);

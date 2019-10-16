@@ -49,12 +49,14 @@ class LoginController extends Controller
     public function login(Request $request){
 
         $validator = Validator::make($request->all(), [
-    		'username' => 'required',
+    		'phone' => 'required',
 			'password' => 'required'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->messages(), 404);
-		}
+        }
+
+
 
         return $this->issueToken($request, 'password');
     }

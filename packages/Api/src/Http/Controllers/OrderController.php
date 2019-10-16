@@ -51,9 +51,7 @@ class OrderController extends Controller
             }
         }
 
-
         return response()->json(['message' => "Thanks our agent reply you very soon"], 200);
-
     }
 
     /**

@@ -38,7 +38,42 @@ class MealController extends Controller
     {
         $user = auth()->user();
         if (\Gate::allows('isAdmin', $user)) {
-            return Meal::create($request->all());
+
+            $rules = array(
+                'avatar' => 'mimes:jpeg,png',
+            );
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json($validator->messages(), 404);
+            }
+
+            $meal = Meal::create($request->all());
+
+
+            if($request->hasFile('image')){
+
+
+                $fileNameWihtExt = $request->file('image')->getClientOriginalName();
+                $fileName = pathinfo($fileNameWihtExt, PATHINFO_FILENAME);
+
+                $extension = $request->file('image')->getClientOriginalExtension();
+
+                $fileNameToStore = 'meal_'.$meal->id.'.'. $extension;
+
+                $path = $request->file('image')->storeAs('public/img/meals', $fileNameToStore);
+                $pathToDatabase = url('storage/img/meals/'. $fileNameToStore);
+            }
+            $meal->update([
+                'image' => $pathToDatabase
+            ]);
+
+            return response()->json([
+                'message' => 'Information was Updated!!',
+                'code' => 200
+            ], 200);
+
+
+
         }
 
         return response()->json([
