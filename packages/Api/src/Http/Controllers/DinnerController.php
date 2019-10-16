@@ -41,13 +41,23 @@ class DinnerController extends Controller
     {
         $user = auth()->user();
         if (\Gate::allows('isAdmin', $user)) {
-            return Dinner::create($request->all());
-        }
+            $dinner = Dinner::create($request->all());
 
+            if($request->items){
+                foreach ($request->items as $item) {
+                    $dinner->meals()->attach($item['id'],['type' => $item['type']]);
+                }
+                return response()->json([
+                    'message' => "Thanks admin",
+                    'code' => 200
+                ], 200);
+            }
+
+        }
         return response()->json([
             'message' => "you don't have permison to do this request",
             'code' => 203
-        ], 200);
+        ], 401);
 
     }
 
@@ -70,21 +80,6 @@ class DinnerController extends Controller
      */
     public function update(Request $request, Dinner $dinner)
     {
-        $user = auth()->user();
-        if (\Gate::allows('isAdmin', $user)) {
-            foreach ($request->items as $item) {
-                $dinner->meals()->attach($item['id'],['type' => $item['type']]);
-            }
-            return response()->json([
-                'message' => "Thanks admin",
-                'code' => 200
-            ], 200);
-        }
-
-        return response()->json([
-            'message' => "you don't have permison to do this request",
-            'code' => 404
-        ], 404);
     }
 
     /**
