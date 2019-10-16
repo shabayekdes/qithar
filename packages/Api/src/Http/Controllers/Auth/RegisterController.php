@@ -24,7 +24,7 @@ class RegisterController extends Controller
     		'name' => 'required',
     		'email' => 'required|email|unique:users,email',
 			'password' => 'required|min:6',
-			'phone' => 'required'
+			'phone' => 'required|unique:users,phone'
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->messages()], 404);

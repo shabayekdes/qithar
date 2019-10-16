@@ -56,8 +56,16 @@ class LoginController extends Controller
             return response()->json($validator->messages(), 404);
         }
 
+        $user = User::where('phone', $request->phone)->first();
 
+        if(!$user){
+            return response()->json([
+                'message' => 'user not found',
+                'code' => 200
+            ], 401);
+        }
 
+        $request->request->add(['email'=> $user->email]);
         return $this->issueToken($request, 'password');
     }
 
