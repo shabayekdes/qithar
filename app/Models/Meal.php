@@ -19,7 +19,7 @@ class Meal extends Model
      * @var array
      */
     protected $fillable = [
-            'name', 'name_en', 'detail', 'detail_en','rating','rating_count','category_id', 'calorie', 'image'
+            'name', 'name_en','type', 'detail', 'detail_en','rating','rating_count','category_id', 'calorie', 'image'
     ];
 
     /**

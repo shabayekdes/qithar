@@ -34,6 +34,6 @@ class Dinner extends Model
      */
     public function meals()
     {
-        return $this->belongsToMany(Meal::class)->withPivot('type','qty');
+        return $this->belongsToMany(Meal::class)->withPivot('qty');
     }
 }

@@ -45,7 +45,7 @@ class DinnerController extends Controller
 
             if($request->items){
                 foreach ($request->items as $item) {
-                    $dinner->meals()->attach($item['id'],['type' => $item['type']]);
+                    $dinner->meals()->attach($item['id']);
                 }
                 return response()->json([
                     'message' => "Thanks admin",

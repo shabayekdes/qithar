@@ -16,7 +16,6 @@ class CreateDinnerMealTable extends Migration
         Schema::create('dinner_meal', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->enum('type',['Main', 'Side', 'Sweet']);
             $table->integer('qty')->default(1);
             $table->unsignedBigInteger('dinner_id');
             $table->unsignedBigInteger('meal_id');

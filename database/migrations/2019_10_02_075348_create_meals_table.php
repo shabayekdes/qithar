@@ -21,6 +21,7 @@ class CreateMealsTable extends Migration
             $table->string('detail_en');
             $table->integer('rating')->default(0);
             $table->integer('rating_count')->default(0);
+            $table->enum('type',['Main', 'Side', 'Sweet']);
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

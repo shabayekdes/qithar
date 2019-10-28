@@ -21,6 +21,8 @@ class MealController extends Controller
 
         if(request('cat_id')){
             $meals = Meal::where('category_id', request('cat_id'))->get();
+        }if(request('type')){
+            $meals = Meal::where('type', request('type'))->get();
         }else{
             $meals = Meal::all();
         }
@@ -68,7 +70,7 @@ class MealController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Information was Updated!!',
+                'message' => 'Thanks meal stored',
                 'code' => 200
             ], 200);
 
