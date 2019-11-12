@@ -19,6 +19,7 @@ class DinnerResource extends JsonResource
             'day' => $this->day,
             'day_en' => $this->day_en,
             'date' => $this->date,
+            'price' => $this->price,
             'items' => MealResource::collection($this->meals)
         ];
     }

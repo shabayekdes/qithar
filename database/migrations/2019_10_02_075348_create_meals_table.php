@@ -17,6 +17,7 @@ class CreateMealsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('name_en');
+            $table->decimal('price', 12, 2);
             $table->string('detail');
             $table->string('detail_en');
             $table->integer('rating')->default(0);

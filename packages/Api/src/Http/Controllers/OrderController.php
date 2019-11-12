@@ -20,7 +20,7 @@ class OrderController extends Controller
         $user = auth()->user();
         if (\Gate::allows('isAdmin', $user)) {
 
-            $orders = Order::where('status', false)->get();
+            $orders = Order::where('status','!=' , 'completed')->get();
         }else{
             $orders = Order::where('user_id', $user->id)->get();
         }
@@ -36,20 +36,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        foreach ($request->orders as $orderRequest) {
 
-        $request->request->add(['number' => time()]);
-        $order = Order::create($request->all());
+            $request->request->add(['number' => time()]);
+            $order = Order::create($orderRequest);
 
-        if($request->type == "dinner"){
-            foreach ($request->items as $item) {
-                $order->dinners()->attach($item['id'],['qty' => $item['qty']]);
+            if($orderRequest['type'] == "dinner"){
+                foreach ($orderRequest['items'] as $item) {
+                    $order->dinners()->attach($item['id'],['qty' => $item['qty']]);
+                }
+
+            }else{
+                foreach ($orderRequest['items'] as $item) {
+                    $order->meals()->attach($item['id'],['qty' => $item['qty']]);
+                }
             }
 
-        }else{
-            foreach ($request->items as $item) {
-                $order->meals()->attach($item['id'],['qty' => $item['qty']]);
-            }
         }
+
+
 
         return response()->json(['message' => "Thanks our agent reply you very soon"], 200);
     }
@@ -71,8 +76,10 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
+        $order = Order::findOrFail($id);
+
         $user = auth()->user();
         if (\Gate::allows('isAdmin', $user)) {
 
@@ -83,8 +90,8 @@ class OrderController extends Controller
 
         return response()->json([
             'message' => "you don't have permison to do this request",
-            'code' => 203
-        ], 200);
+            'code' => 401
+        ], 401);
 
     }
 

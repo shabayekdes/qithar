@@ -2,13 +2,13 @@
 
 namespace Api\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Http\Resources\AddressResource;
 
-class CategoryController extends Controller
+class AddressController extends Controller
 {
 
     /**
@@ -18,9 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent_id', 0)->get();
+        $addresses = Address::all();
 
-        return CategoryResource::collection($categories);
+        return AddressResource::collection($addresses);
     }
 
     /**
@@ -32,8 +32,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
+
         if (\Gate::allows('isAdmin', $user)) {
-            return Category::create($request->all());
+            return Address::create($request->all());
         }
 
         return response()->json([

@@ -19,7 +19,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'address', 'status', 'payment','user_id'
+        'number', 'address','type','status', 'payment','user_id'
     ];
 
     /**
@@ -28,7 +28,14 @@ class Order extends Model
      * @var array
      */
     protected $guarded = [];
-
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'payment' => 'boolean'
+    ];
     /**
      * Get all meals pivot.
      */

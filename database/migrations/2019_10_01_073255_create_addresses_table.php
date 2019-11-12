@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDinnersTable extends Migration
+class CreateAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateDinnersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dinners', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('day');
-            $table->string('day_en');
-            $table->date('date');
-            $table->decimal('price', 12, 2);
+            $table->string('name');
+            $table->text('address');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateDinnersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dinners');
+        Schema::dropIfExists('addresses');
     }
 }

@@ -42,7 +42,7 @@ class MealController extends Controller
         if (\Gate::allows('isAdmin', $user)) {
 
             $rules = array(
-                'avatar' => 'mimes:jpeg,png',
+                'avatar' => 'mimes:jpeg,png'
             );
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {

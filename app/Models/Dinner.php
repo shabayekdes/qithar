@@ -19,7 +19,7 @@ class Dinner extends Model
      * @var array
      */
     protected $fillable = [
-            'day', 'day_en', 'date'
+            'day', 'day_en', 'date','price'
     ];
 
     /**
