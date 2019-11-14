@@ -21,8 +21,8 @@ class OrderResource extends JsonResource
             "status" => $this->status,
             "payment" => $this->payment,
             "type" => $this->type,
+            "total" => $this->total,
             "items" => $this->type == "dinner" ? $this->dinners()->get() : $this->meals()->get(),
-            // "user_id" => 1,
         ];
     }
 }
