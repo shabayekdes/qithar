@@ -15,6 +15,7 @@ Route::namespace('\Api\Http\Controllers')->prefix('api')->group(function(){
 
         Route::post('change-password', 'UserController@changePassword');
         Route::get('my-rating', 'UserController@myRating');
+        Route::put('user', 'UserController@update');
 
         Route::apiResource('category', 'CategoryController');
         Route::apiResource('meal', 'MealController');
