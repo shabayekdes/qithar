@@ -5,6 +5,7 @@ namespace Api\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MealResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -63,5 +64,10 @@ class UserController extends Controller
         }
 
         return MealResource::collection($meals->flatten()->unique());
+    }
+    public function getInfo()
+    {
+        $user = auth()->user();
+        return new UserResource($user);
     }
 }

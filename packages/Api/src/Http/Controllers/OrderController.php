@@ -3,6 +3,7 @@
 namespace Api\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
@@ -38,7 +39,8 @@ class OrderController extends Controller
     {
         foreach ($request->orders as $orderRequest) {
 
-            $request->request->add(['number' => time()]);
+            $orderRequest['number'] = 'Qi_'. Str::random(3). '_' .mt_rand(100, 9999);
+            // dd($orderRequest);
             $order = Order::create($orderRequest);
 
             if($orderRequest['type'] == "dinner"){
