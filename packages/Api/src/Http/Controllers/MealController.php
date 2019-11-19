@@ -102,8 +102,9 @@ class MealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meal $meal)
+    public function update(Request $request, $id)
     {
+        $meal = Meal::findOrFail($id);
         $rating = $meal->rating + $request->rating;
         $request->merge(['rating' => $rating ]);
         $request->merge(['rating_count' => ++$meal->rating_count ]);

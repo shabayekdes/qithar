@@ -2,9 +2,10 @@
 
 namespace Api\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
+use Illuminate\Support\Facades\Route;
 
 trait IssueTokenTrait{
 
@@ -21,9 +22,25 @@ trait IssueTokenTrait{
         }
 
         $request->request->add($params);
-		$proxy = Request::create('oauth/token', 'POST');
+        $proxy = Request::create('oauth/token', 'POST');
+        // $request->request->add('user',auth()->user());
 
-    	return Route::dispatch($proxy);
+        $token = Route::dispatch($proxy);
+
+        $json = json_decode($token->getContent(), true);
+
+        if(isset($json['error'])){
+            return response()->json([
+                'message' => "auth error",
+                'code' => 401
+            ], 401);
+        }
+
+        $user = User::where('phone',$request->phone)->first();
+        return response()->json([
+            'token' => $json,
+            'user' => $user
+        ], 200);
 
 	}
 
