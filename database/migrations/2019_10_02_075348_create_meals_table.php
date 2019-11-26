@@ -20,8 +20,8 @@ class CreateMealsTable extends Migration
             $table->decimal('price', 12, 2);
             $table->string('detail');
             $table->string('detail_en');
-            $table->integer('rating')->default(0);
-            $table->integer('rating_count')->default(0);
+            $table->integer('rating')->nullable();
+            $table->integer('rating_count')->nullable();
             $table->enum('type',['Main', 'Side', 'Sweet']);
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

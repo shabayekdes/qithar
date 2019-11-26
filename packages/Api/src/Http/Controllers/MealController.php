@@ -51,6 +51,7 @@ class MealController extends Controller
 
             $meal = Meal::create($request->all());
 
+            $pathToDatabase = null;
 
             if($request->hasFile('image')){
 
@@ -65,6 +66,7 @@ class MealController extends Controller
                 $path = $request->file('image')->storeAs('public/img/meals', $fileNameToStore);
                 $pathToDatabase = url('storage/img/meals/'. $fileNameToStore);
             }
+
             $meal->update([
                 'image' => $pathToDatabase
             ]);

@@ -14,7 +14,13 @@ class MealResource extends JsonResource
      */
     public function toArray($request)
     {
-        $rating = $this->rating / $this->rating_count;
+
+
+        if($this->rating != null || $this->rating_count != null){
+            $rate = $this->rating / $this->rating_count;
+            $rating = round($rate,1);
+        }
+
         return [
             "id"=> $this->id,
             "name"=> $this->name,
@@ -24,7 +30,10 @@ class MealResource extends JsonResource
             "detail_en"=> $this->detail_en,
             "calorie"=> $this->calorie,
             "image"=> $this->image,
-            "rating"=> round($rating,1)
+            "type"=> $this->type,
+            "category_id"=> $this->category_id,
+            "rating"=> $this->rating == null ? 0 : $rating
         ];
+
     }
 }
