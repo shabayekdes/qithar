@@ -41,7 +41,7 @@ class Order extends Model
      */
     public function meals()
     {
-        return $this->morphedByMany(Meal::class, 'orderable');
+        return $this->morphedByMany(Meal::class, 'orderable')->withPivot('qty');
     }
 
     /**
@@ -49,6 +49,6 @@ class Order extends Model
      */
     public function dinners()
     {
-        return $this->morphedByMany(Dinner::class, 'orderable');
+        return $this->morphedByMany(Dinner::class, 'orderable')->withPivot('qty');
     }
 }

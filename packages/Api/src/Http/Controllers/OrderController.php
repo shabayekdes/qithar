@@ -23,7 +23,7 @@ class OrderController extends Controller
 
             $orders = Order::where('status','!=' , 'completed')->get();
         }else{
-            $orders = Order::where('user_id', $user->id)->get();
+            $orders = Order::where('status','!=' , 'completed')->where('user_id', $user->id)->get();
         }
 
         return OrderResource::collection($orders);
@@ -83,17 +83,9 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $user = auth()->user();
-        if (\Gate::allows('isAdmin', $user)) {
 
-            $order->update($request->all());
-            return response()->json(['message' => "Order Updated!!"], 200);
-
-        }
-
-        return response()->json([
-            'message' => "you don't have permison to do this request",
-            'code' => 401
-        ], 401);
+        $order->update($request->all());
+        return response()->json(['message' => "Order Updated!!"], 200);
 
     }
 
