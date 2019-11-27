@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -22,7 +23,8 @@ class OrderResource extends JsonResource
             "payment" => $this->payment,
             "type" => $this->type,
             "total" => $this->total,
-            "items" => $this->type == "dinner" ? $this->dinners()->get() : $this->meals()->get(),
+            "items" => $this->type == "dinner" ? $this->dinners()->where('date', today())->get() : $this->meals()->get(),
+            "user" => new UserResource($this->user)
         ];
     }
 }

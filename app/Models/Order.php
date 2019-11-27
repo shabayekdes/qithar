@@ -39,6 +39,13 @@ class Order extends Model
     /**
      * Get all meals pivot.
      */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * Get all meals pivot.
+     */
     public function meals()
     {
         return $this->morphedByMany(Meal::class, 'orderable')->withPivot('qty');
