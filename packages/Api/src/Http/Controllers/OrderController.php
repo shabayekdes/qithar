@@ -21,19 +21,19 @@ class OrderController extends Controller
         $user = auth()->user();
         if (\Gate::allows('isAdmin', $user)) {
 
-            $orders_collection = Order::with('dinners','meals')->where('status','!=' , 'completed')->get();
+            $orders = Order::with('dinners','meals')->where('status','!=' , 'completed')->get();
 
-            $orders = $orders_collection->map(function ($order) {
-                $dinners_today = $order->dinners()->where('date', today())->exists();
+            // $orders = $orders_collection->map(function ($order) {
+            //     $dinners_today = $order->dinners()->where('date', today())->exists();
 
-                if($dinners_today || $order->meals()->exists()){
-                    return $order;
-                }
-                return null;
-            })
-            ->reject(function ($order) {
-                return empty($order);
-            });
+            //     if($dinners_today || $order->meals()->exists()){
+            //         return $order;
+            //     }
+            //     return null;
+            // })
+            // ->reject(function ($order) {
+            //     return empty($order);
+            // });
 
         }else{
             $orders = Order::where('status','!=' , 'completed')->where('user_id', $user->id)->get();
