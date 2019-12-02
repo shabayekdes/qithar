@@ -63,7 +63,7 @@ class UserController extends Controller
             $meals->add($dinner->meals);
         }
 
-        return MealResource::collection($meals->flatten()->unique());
+        return MealResource::collection($meals->flatten()->unique('id'));
     }
     public function getInfo()
     {
